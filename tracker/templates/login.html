@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HMPV Patient Login</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            /* --- BACKGROUND IMAGE SETTINGS --- */
+            background-image: url('https://www.shikshacampus.com/wp-content/uploads/2025/01/HMPV-Virus-Symptons-1.webp');
+            background-size: cover;       /* Stretch to fill screen */
+            background-position: center;  /* Center the virus image */
+            background-repeat: no-repeat; /* Do not tile */
+            background-attachment: fixed; /* Keep background fixed when scrolling */
+        }
+
+        /* This dark overlay makes the text pop and the background look cooler */
+        .overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 50, 0.4); /* Blue-ish tint overlay */
+            z-index: 1;
+        }
+
+        .login-container {
+            background-color: rgba(255, 255, 255, 0.95); /* Slight transparency */
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            width: 350px;
+            text-align: center;
+            position: relative;
+            z-index: 2; /* Sit on top of overlay */
+            backdrop-filter: blur(5px); /* Blurs the background behind the box */
+        }
+
+        h2 {
+            color: #020066;
+            margin-bottom: 25px;
+            font-size: 24px;
+        }
+
+        label {
+            display: block;
+            text-align: left;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+            font-size: 14px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 14px;
+            background: #f9f9f9;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #020066;
+            background: #fff;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #020066;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background-color: #003355;
+        }
+
+        .register-link {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .register-link a {
+            color: #020066;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .register-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="overlay"></div>
+
+    <div class="login-container">
+        <h2>Patient Login</h2>
+        
+        <form method="POST">
+            {% csrf_token %}
+            
+            <label>Username:</label>
+            <input type="text" name="username" placeholder="Enter your username" required>
+
+            <label>Password:</label>
+            <input type="password" name="password" placeholder="Enter your password" required>
+
+            <button type="submit">Login</button>
+        </form>
+
+        <div class="register-link">
+            Don't have an account? <a href="{% url 'register' %}">Register</a>
+        </div>
+    </div>
+
+</body>
+</html>

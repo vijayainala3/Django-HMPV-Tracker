@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HMPV Admin Dashboard</title>
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f4f7fa; padding: 20px; }
+        
+        /* HEADER STYLES */
+        .admin-header {
+            background-color: #c0392b; /* Red for Admin */
+            color: white;
+            padding: 15px 30px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .logout-btn {
+            background: white;
+            color: #c0392b;
+            padding: 8px 15px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 4px;
+        }
+
+        /* TABLE STYLES */
+        table {
+            width: 100%;
+            background: white;
+            border-collapse: collapse;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 40px; /* Space between tables */
+        }
+        
+        th { background-color: #34495e; color: white; padding: 15px; text-align: left; }
+        td { padding: 15px; border-bottom: 1px solid #ddd; color: #333; }
+        tr:hover { background-color: #f1f1f1; }
+
+        /* BUTTON STYLES */
+        .btn { padding: 8px 12px; border-radius: 4px; text-decoration: none; color: white; font-size: 12px; font-weight: bold; margin-right: 5px; }
+        .btn-approve { background-color: #c0392b; } /* Red for Positive */
+        .btn-clear { background-color: #27ae60; }   /* Green for Negative/Verify */
+        
+        .badge { padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: bold; }
+        .badge-verified { background: #d4edda; color: #155724; }
+        .badge-pending { background: #fff3cd; color: #856404; }
+
+        .no-data { text-align: center; padding: 20px; color: #777; font-size: 16px; background: #fff; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        
+        h3 { color: #020066; border-bottom: 2px solid #ddd; padding-bottom: 10px; margin-top: 0; }
+    </style>
+</head>
+<body>
+
+    <div class="admin-header">
+        <h2>Admin Control Panel (Requests)</h2>
+        <a href="{% url 'logout' %}" class="logout-btn">Logout</a>
+    </div>
+
+    <h3>HMPV Test Requests</h3>
+    {% if pending_tests %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Patient Name</th>
+                    <th>Date of Test</th>
+                    <th>Symptoms</th>
+                    <th>Phone Status</th>
+                    <th>ID Proof</th>
+                    <th>Action (Approve Result)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for test in pending_tests %}
+                <tr>
+                    <td><strong>{{ test.patient.username }}</strong></td>
+                    <td>{{ test.date_of_test }}</td>
+                    <td>{{ test.symptoms }}</td>
+                    
+                    <td>
+                        {% if test.is_verified %}
+                            <span class="badge badge-verified">✔ Verified</span>
+                        {% else %}
+                            <span class="badge badge-pending">⚠ Not Verified</span>
+                        {% endif %}
+                    </td>
+
+                    <td>
+                        {% if test.report_image %}
+                            <a href="{{ test.report_image.url }}" target="_blank" style="color: blue; text-decoration: underline;">View ID Card</a>
+                        {% else %}
+                            No ID
+                        {% endif %}
+                    </td>
+
+                    <td>
+                        <a href="{% url 'approve_test' test.id 'Positive' %}" class="btn btn-approve">Mark POSITIVE</a>
+                        <a href="{% url 'approve_test' test.id 'Negative' %}" class="btn btn-clear">Mark NEGATIVE</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="no-data">
+            <p>No pending test requests found.</p>
+        </div>
+    {% endif %}
+
+
+    <h3 style="margin-top: 50px;">Vaccination Approvals</h3>
+    
+    {% if pending_vaccines %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Patient</th>
+                    <th>Date</th>
+                    <th>Vaccine Type</th>
+                    <th>Certificate Proof</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for v in pending_vaccines %}
+                <tr>
+                    <td><strong>{{ v.patient.username }}</strong></td>
+                    <td>{{ v.date_of_vaccination }}</td>
+                    <td>{{ v.vaccine_type }}</td>
+                    
+                    <td>
+                        {% if v.certificate_image %}
+                            <a href="{{ v.certificate_image.url }}" target="_blank" style="color: blue; text-decoration: underline;">View Certificate</a>
+                        {% else %}
+                            <span style="color: grey;">No File</span>
+                        {% endif %}
+                    </td>
+
+                    <td>
+                        <a href="{% url 'approve_vaccine' v.id %}" class="btn btn-clear">✔ Verify Record</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="no-data" style="margin-top: 10px;">
+            <p>No pending vaccination approvals.</p>
+        </div>
+    {% endif %}
+
+</body>
+</html>

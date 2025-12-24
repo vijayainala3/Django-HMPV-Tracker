@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Medical Information - HMPV</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7fa;
+            color: #333;
+        }
+
+        header {
+            background-color: #020066;
+            color: white;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .back-btn {
+            color: white;
+            text-decoration: none;
+            border: 1px solid white;
+            padding: 8px 15px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 14px;
+            transition: background 0.2s;
+        }
+
+        .back-btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        main {
+            max-width: 900px;
+            margin: 40px auto;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        h2 {
+            color: #020066;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 10px;
+            margin-top: 30px;
+        }
+
+        h2:first-of-type { margin-top: 0; }
+
+        p {
+            line-height: 1.6;
+            color: #555;
+            font-size: 16px;
+        }
+
+        ul {
+            background-color: #f9f9f9;
+            padding: 20px 40px;
+            border-radius: 8px;
+            border-left: 4px solid #020066;
+        }
+
+        li {
+            margin-bottom: 10px;
+            color: #444;
+        }
+
+        .alert-box {
+            background-color: #e3f2fd;
+            border-left: 5px solid #2196f3;
+            padding: 15px;
+            margin: 20px 0;
+            color: #0d47a1;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #888;
+            font-size: 14px;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>HMPV Information Center</h1>
+        <a href="{% url 'index' %}" class="back-btn">← Back to Dashboard</a>
+    </header>
+
+    <main>
+        <h2>What is Human Metapneumovirus (HMPV)?</h2>
+        <p>Human metapneumovirus (HMPV) is a common respiratory virus that can cause upper and lower respiratory tract infections. It is most frequent in young children, older adults, and people with weakened immune systems.</p>
+        
+        <div class="alert-box">
+            <strong>Key Fact:</strong> HMPV was discovered in 2001, but studies show it has likely been circulating in humans for at least 50 years.
+        </div>
+
+        <h2>Common Symptoms</h2>
+        <p>Symptoms commonly appear 3 to 6 days after exposure to the virus. They include:</p>
+        <ul>
+            <li>Cough</li>
+            <li>Fever</li>
+            <li>Nasal congestion</li>
+            <li>Shortness of breath</li>
+            <li>Sore throat</li>
+        </ul>
+
+        <h2>Transmission</h2>
+        <p>HMPV is spread from an infected person to others through:</p>
+        <ul>
+            <li>Secretions from coughing and sneezing.</li>
+            <li>Close personal contact, such as touching or shaking hands.</li>
+            <li>Touching objects or surfaces that have the virus on them, then touching your mouth, nose, or eyes.</li>
+        </ul>
+
+        <h2>Prevention</h2>
+        <p>Currently, there is no specific vaccine for HMPV. However, you can help prevent the spread by:</p>
+        <p>
+            1. Washing your hands often with soap and water.<br>
+            2. Avoiding close contact with people who are sick.<br>
+            3. Covering your mouth and nose when coughing or sneezing.
+        </p>
+    </main>
+
+    <footer>
+        © 2025 HMPV Tracking System. All rights reserved.
+    </footer>
+
+</body>
+</html>

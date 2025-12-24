@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Request Submitted</title>
+    <style>
+        body { font-family: Arial; background-color: #f4f7fa; display: flex; justify-content: center; align-items: center; height: 100vh; }
+        .box { background: white; padding: 50px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); width: 400px; text-align: center; }
+        h1 { color: #2ecc71; margin-bottom: 10px; }
+        p { color: #555; line-height: 1.6; }
+        a { display: inline-block; margin-top: 20px; text-decoration: none; background: #020066; color: white; padding: 10px 20px; border-radius: 5px; font-weight: bold; }
+        a:hover { background-color: #003355; }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h1 style="font-size: 60px;">✔</h1>
+        <h2 style="color: #020066;">Verified Successfully!</h2>
+        <p>Your HMPV Test Request has been securely sent to the Admin.</p>
+        <p>Current Status: <strong>Pending Approval</strong></p>
+        <a href="{% url 'index' %}">Go to Dashboard</a>
+    </div>
+</body>
+</html>

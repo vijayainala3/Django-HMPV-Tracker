@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register - HMPV</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            /* --- BACKGROUND IMAGE SETTINGS --- */
+            background-image: url('https://www.scotsman.com/jpim-static/image/2025/01/09/15/40/hmpv-symptoms-should-we-be-worried.jpeg?crop=3:2');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        /* Dark overlay for better readability */
+        .overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 50, 0.5); /* Dark blue tint */
+            z-index: 1;
+        }
+
+        .box {
+            background-color: rgba(255, 255, 255, 0.95); /* Slight transparency */
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            width: 320px;
+            text-align: center;
+            position: relative;
+            z-index: 2; /* Sit on top of overlay */
+            backdrop-filter: blur(5px);
+        }
+
+        h2 {
+            color: #020066;
+            margin-top: 0;
+            margin-bottom: 25px;
+        }
+
+        /* Form Field Styling */
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            background: #f9f9f9;
+            font-size: 14px;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #020066;
+            background: #fff;
+        }
+
+        label {
+            display: block;
+            text-align: left;
+            font-size: 13px;
+            font-weight: bold;
+            color: #444;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #020066;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #003355;
+        }
+
+        p {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        a {
+            color: #020066;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="overlay"></div>
+
+    <div class="box">
+        <h2>Patient Registration</h2>
+        
+        <form method="POST">
+            {% csrf_token %}
+            {% for field in form %}
+                <div style="text-align: left;">
+                    <label>{{ field.label }}</label>
+                    {{ field }}
+                </div>
+            {% endfor %}
+            <button type="submit">Create Account</button>
+        </form>
+        
+        <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
+    </div>
+
+</body>
+</html>

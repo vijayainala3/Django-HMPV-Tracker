@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HMPV Patient Portal</title>
+    <style>
+        /* --- CSS STYLES --- */
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7fa;
+            color: #333;
+        }
+
+        header {
+            background-color: #020066;
+            color: white;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 26px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .info-link {
+            color: #e0e0e0;
+            text-decoration: none;
+            margin-right: 25px;
+            font-size: 15px;
+            border-bottom: 1px dotted #e0e0e0;
+        }
+        
+        .info-link:hover {
+            color: white;
+            border-bottom: 1px solid white;
+        }
+
+        .user-name {
+            margin-right: 15px;
+            font-size: 15px;
+        }
+
+        .logout-btn {
+            background-color: white;
+            color: #020066;
+            padding: 8px 18px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 14px;
+            transition: background 0.2s;
+        }
+
+        .logout-btn:hover {
+            background-color: #e6e6e6;
+        }
+
+        main {
+            display: flex;
+            justify-content: center;
+            padding: 30px 20px;
+            margin-bottom: 60px; /* Space for footer */
+        }
+
+        .one {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        h2 {
+            color: #020066;
+            margin-top: 0;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 10px;
+        }
+
+        label {
+            font-size: 14px;
+            margin-top: 15px;
+            display: block;
+            font-weight: 600;
+            color: #444;
+            margin-bottom: 5px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 14px;
+            transition: border-color 0.2s;
+        }
+        
+        input:focus, select:focus {
+            border-color: #020066;
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            background-color: #020066;
+            color: white;
+            cursor: pointer;
+            border: none;
+            margin-top: 25px;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+
+        button:hover {
+            background-color: #003355;
+        }
+
+        /* Identity Verification Box Styling */
+        .verification-box {
+            background-color: #f8faff;
+            padding: 15px;
+            border: 1px solid #dce4ec;
+            margin-top: 20px;
+            border-radius: 6px;
+        }
+        
+        .verification-box h4 {
+            margin: 0 0 10px 0;
+            color: #020066;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .verification-box h4::before {
+            content: '🔒';
+            margin-right: 8px;
+            font-size: 14px;
+        }
+
+        .helper-text {
+            font-size: 12px;
+            color: #666;
+            margin-top: 8px;
+            font-style: italic;
+        }
+
+        /* Status Box Styling */
+        .status-box {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f1f4f8;
+            border-left: 5px solid #020066;
+            border-radius: 6px;
+        }
+
+        .status-box h3 {
+            margin-top: 0;
+            color: #020066;
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+        
+        .status-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .badge-Pending { background: #ffeeba; color: #856404; border: 1px solid #ffeeba; }
+        .badge-Positive { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .badge-Negative { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+
+        footer {
+            background-color: #020066;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+            font-size: 13px;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .one { grid-template-columns: 1fr; }
+            header { flex-direction: column; text-align: center; gap: 10px; }
+            .user-info { flex-direction: column; gap: 10px; }
+            .info-link { margin-right: 0; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div>
+            <h1>HMPV Patient Portal</h1>
+        </div>
+        <div class="user-info">
+            
+            <a href="{% url 'info' %}" class="info-link">Medical Information</a>
+            
+            <span class="user-name">Welcome, <strong>{{ user.username }}</strong></span>
+            <a href="{% url 'logout' %}" class="logout-btn">Logout</a>
+        </div>
+    </header>
+
+    <main>
+        <section class="one">
+            
+            <div class="card">
+                <h2>Request HMPV Test</h2>
+                
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    
+                    <label>Date of Sample Collection:</label>
+                    <input type="date" name="testDate" required>
+                    
+                    <label>Primary Symptom:</label>
+                    <select name="symptoms" required>
+                        <option value="" disabled selected>Select a symptom...</option>
+                        <option value="Cough">Cough</option>
+                        <option value="Fever">Fever</option>
+                        <option value="Wheezing">Wheezing</option>
+                        <option value="Shortness of Breath">Shortness of Breath</option>
+                        <option value="Sore Throat">Sore Throat</option>
+                        <option value="Runny Nose">Runny Nose</option>
+                        <option value="Other">Other</option>
+                    </select>
+
+                    <label>Preferred Test Method:</label>
+                    <select name="testType" required>
+                        <option value="PCR">RT-PCR (Highly Accurate)</option>
+                        <option value="Antigen">Rapid Antigen Test</option>
+                        <option value="Culture">Viral Culture</option>
+                    </select>
+                    
+                    <div class="verification-box">
+                        <h4>Identity Verification</h4>
+                        
+                        <label>Aadhaar Number:</label>
+                        <input type="text" name="aadhaarNumber" placeholder="Enter 12-digit Aadhaar" maxlength="12" pattern="\d{12}" title="Must be 12 digits" required>
+
+                        <label>Upload Aadhaar Card (Photo):</label>
+                        <input type="file" name="reportImage" accept="image/*" required>
+
+                        <label>Phone Number:</label>
+                        <input type="tel" name="phoneNumber" placeholder="9876543210" maxlength="10" pattern="\d{10}" title="Must be 10 digits" required>
+                        
+                        <p class="helper-text">
+                            We will send a 4-digit verification code (OTP) to this number via <strong>WhatsApp</strong> on the next screen.
+                        </p>
+                    </div>
+
+                    <button type="submit" name="submit_test">Proceed to Verification</button>
+                </form>
+
+                <div class="status-box">
+                    <h3>Latest Test Status</h3>
+                    {% if latest_test %}
+                        <div class="status-row">
+                            <span>Date:</span>
+                            <strong>{{ latest_test.date_of_test }}</strong>
+                        </div>
+                        <div class="status-row">
+                            <span>Result:</span> 
+                            <span class="badge badge-{{ latest_test.test_result }}">
+                                {{ latest_test.test_result }}
+                            </span>
+                        </div>
+                        <div class="status-row">
+                            <span>Phone Verified:</span>
+                            <strong style="color: green;">✔ Yes</strong>
+                        </div>
+                        <div class="status-row">
+                            <span>Aadhaar:</span>
+                            <span>{{ latest_test.aadhaar_number }}</span>
+                        </div>
+                        
+                        {% if latest_test.report_image %}
+                            <div style="margin-top: 10px; font-size: 13px;">
+                                <a href="{{ latest_test.report_image.url }}" target="_blank" style="color:#020066;">View Uploaded ID Proof</a>
+                            </div>
+                        {% endif %}
+                        
+                        {% if latest_test.test_result == "Pending" %}
+                            <p style="margin-top: 10px; font-size: 13px; color: #666;">
+                                <i>Your result is currently being reviewed by an Admin.</i>
+                            </p>
+                        {% endif %}
+                    {% else %}
+                        <p>No active test requests found.</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Record Vaccination</h2>
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    
+                    <label>Date of Vaccination:</label>
+                    <input type="date" name="vaccineDate" required>
+
+                    <label>Vaccine Type:</label>
+                    <select name="vaccineType" required>
+                        <option value="Toxoid">Toxoid</option>
+                        <option value="Polysaccharide">Polysaccharide</option>
+                        <option value="mRNA">mRNA</option>
+                    </select>
+
+                    <label>Upload Certificate (Optional):</label>
+                    <input type="file" name="certImage" accept="image/*">
+
+                    <button type="submit" name="submit_vaccine">Update Record</button>
+                </form>
+
+                <div class="status-box">
+                    <h3>Latest Vaccination</h3>
+                    {% if latest_vaccine %}
+                        <div class="status-row">
+                            <span>Date:</span>
+                            <strong>{{ latest_vaccine.date_of_vaccination }}</strong>
+                        </div>
+                        <div class="status-row">
+                            <span>Type:</span>
+                            <strong>{{ latest_vaccine.vaccine_type }}</strong>
+                        </div>
+
+                        <div class="status-row">
+                            <span>Status:</span>
+                            {% if latest_vaccine.is_verified %}
+                                <span class="badge" style="background:#d4edda; color:#155724; padding:4px 8px; border-radius:4px; font-size:12px;">✔ Verified</span>
+                            {% else %}
+                                <span class="badge" style="background:#fff3cd; color:#856404; padding:4px 8px; border-radius:4px; font-size:12px;">⚠ Pending Review</span>
+                            {% endif %}
+                        </div>
+
+                        {% if latest_vaccine.certificate_image %}
+                            <div style="margin-top: 10px; font-size: 13px;">
+                                <a href="{{ latest_vaccine.certificate_image.url }}" target="_blank" style="color:#020066;">View Certificate</a>
+                            </div>
+                        {% endif %}
+                    {% else %}
+                        <p>No vaccination data found.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Powered by HMPV Tracker System &copy; 2025</p>
+    </footer>
+</body>
+</html>
