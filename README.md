@@ -11,5 +11,4 @@ A comprehensive full-stack medical portal built with **Django (Python)**. It fea
 * **Vaccination Tracker:** Digital record of vaccination history.
 
 
----
 *Built with Python, Django, HTML5, CSS3, SQLite*
